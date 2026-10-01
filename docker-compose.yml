@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  db_arheologie:
+    image: postgres:16-alpine
+    container_name: db_arheologie
+    environment:
+      POSTGRES_USER: admin_arheo
+      POSTGRES_PASSWORD: parola_secreta
+      POSTGRES_DB: arheologie
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./init_schema.sql:/docker-entrypoint-initdb.d/init_schema.sql
+      - pgdata_arheo:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  pgdata_arheo:
