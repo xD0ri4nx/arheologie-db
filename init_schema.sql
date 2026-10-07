@@ -94,3 +94,15 @@ CREATE TABLE IF NOT EXISTS analize_centre (
     CONSTRAINT fk_analize_fragment FOREIGN KEY (fragment_id) 
         REFERENCES fragmente_os(id) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS fotografii_schelet (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    schelet_id UUID NOT NULL REFERENCES schelete(id) ON DELETE CASCADE,
+    numar_cadru INTEGER NOT NULL CHECK (numar_cadru > 0),
+    fisier_imagine VARCHAR(255) NOT NULL,
+    descriere TEXT,
+    data_adaugarii TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS idx_foto_schelet_cadru 
+ON fotografii_schelet (schelet_id, numar_cadru);
